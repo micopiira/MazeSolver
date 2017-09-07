@@ -41,6 +41,10 @@ public class Maze<T> {
 		return Optional.ofNullable(mazePoints.get(coordinate));
 	}
 
+	public void set(Coordinate coordinate, T t) {
+		this.mazePoints.put(coordinate, t);
+	}
+
 	public List<T> getNeighbors(Coordinate coordinate) {
 		return coordinate.getNeighbours().stream()
 				.map(this::get)

@@ -62,15 +62,14 @@ public class AStarMazeSolver implements MazeSolver {
 		}
 	}
 
-
 	private List<Node> retracePath(Node startNode, Node endNode) {
-		List<Node> path = new ArrayList<>();
+		Deque<Node> path = new ArrayDeque<>();
 		Node currentNode = endNode;
 		while (currentNode != startNode) {
-			path.add(currentNode);
+			path.addFirst(currentNode);
 			currentNode = currentNode.getParent();
 		}
-		return path;
+		return new ArrayList<>(path);
 	}
 
 	public Optional<List<Coordinate>> findPath(Maze<Node> maze, Coordinate start, Coordinate end) {
@@ -129,6 +128,5 @@ public class AStarMazeSolver implements MazeSolver {
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
 		return findPath(nodeMaze, start, goal);
-
 	}
 }

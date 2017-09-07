@@ -21,15 +21,16 @@ public class Coordinate {
 	}
 
 	public List<Coordinate> getNeighbours() {
+		// Diagonal neighbours commented out
 		return Arrays.asList(
-				Coordinate.of(this.getX() - 1, this.getY() - 1),
+				// Coordinate.of(this.getX() - 1, this.getY() - 1),
 				Coordinate.of(this.getX() - 1, this.getY()),
-				Coordinate.of(this.getX() - 1, this.getY() + 1),
+				// Coordinate.of(this.getX() - 1, this.getY() + 1),
 				Coordinate.of(this.getX(), this.getY() - 1),
 				Coordinate.of(this.getX(), this.getY() + 1),
-				Coordinate.of(this.getX() + 1, this.getY() - 1),
-				Coordinate.of(this.getX() + 1, this.getY()),
-				Coordinate.of(this.getX() + 1, this.getY() + 1)
+				// Coordinate.of(this.getX() + 1, this.getY() - 1),
+				Coordinate.of(this.getX() + 1, this.getY())
+				// Coordinate.of(this.getX() + 1, this.getY() + 1)
 		);
 	}
 
