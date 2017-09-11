@@ -3,13 +3,19 @@ package me.micopiira;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Coordinate {
 	private final int x;
 	private final int y;
+
+	private Coordinate(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public static Coordinate of(int x, int y) {
+		return new Coordinate(x, y);
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -50,15 +56,6 @@ public class Coordinate {
 				", y=" + y +
 				'}';
 
-	}
-
-	private Coordinate(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-
-	public static Coordinate of(int x, int y) {
-		return new Coordinate(x, y);
 	}
 
 	public int getX() {

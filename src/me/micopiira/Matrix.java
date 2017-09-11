@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Maze<T> {
+public class Matrix<T> {
 	private Map<Coordinate, T> mazePoints = new HashMap<>();
 
-	public Maze(Map<Coordinate, T> mazePoints) {
+	public Matrix(Map<Coordinate, T> mazePoints) {
 		this.mazePoints = mazePoints;
 	}
 
-	public Maze(List<List<T>> maze) {
+	public Matrix(List<List<T>> maze) {
 		for (int y = 0; y < maze.size(); y++) {
 			for (int x = 0; x < maze.get(y).size(); x++) {
 				mazePoints.put(Coordinate.of(x, y), maze.get(y).get(x));

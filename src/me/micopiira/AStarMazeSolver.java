@@ -72,9 +72,9 @@ public class AStarMazeSolver implements MazeSolver {
 		return new ArrayList<>(path);
 	}
 
-	public Optional<List<Coordinate>> findPath(Maze<Node> maze, Coordinate start, Coordinate end) {
-		Node startNode = maze.get(start).get();
-		Node targetNode = maze.get(end).get();
+	public Optional<List<Coordinate>> findPath(Matrix<Node> matrix, Coordinate start, Coordinate end) {
+		Node startNode = matrix.get(start).get();
+		Node targetNode = matrix.get(end).get();
 
 		List<Node> openSet = new ArrayList<>();
 		HashSet<Node> closedSet = new HashSet<>();
@@ -96,7 +96,7 @@ public class AStarMazeSolver implements MazeSolver {
 				return Optional.of(retracePath(startNode, targetNode).stream().map(Node::getCoordinate).collect(Collectors.toList()));
 			}
 
-			for (Node neighbour : maze.getNeighbors(node.getCoordinate())) {
+			for (Node neighbour : matrix.getNeighbors(node.getCoordinate())) {
 				if (!neighbour.isWalkable() || closedSet.contains(neighbour)) {
 					continue;
 				}
@@ -116,17 +116,17 @@ public class AStarMazeSolver implements MazeSolver {
 	}
 
 	@Override
-	public Optional<List<Coordinate>> solve(Maze<MazePoint> maze) {
-		Coordinate start = maze.findFirst(MazePoint.START).orElseThrow(() -> new RuntimeException("No starting point found from maze!"));
-		Coordinate goal = maze.findFirst(MazePoint.GOAL).orElseThrow(() -> new RuntimeException("No goal found from maze!"));
+	public Optional<List<Coordinate>> solve(Matrix<MazePoint> matrix) {
+		Coordinate start = matrix.findFirst(MazePoint.START).orElseThrow(() -> new RuntimeException("No starting point found from matrix!"));
+		Coordinate goal = matrix.findFirst(MazePoint.GOAL).orElseThrow(() -> new RuntimeException("No goal found from matrix!"));
 
-		Maze<Node> nodeMaze = new Maze<>(maze.getMazePoints().entrySet().stream()
+		Matrix<Node> nodeMatrix = new Matrix<>(matrix.getMazePoints().entrySet().stream()
 				.map(entry -> {
 					Node node = new Node(entry.getKey(), !entry.getValue().equals(MazePoint.WALL));
 					return new AbstractMap.SimpleEntry<>(entry.getKey(), node);
 				})
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
-		return findPath(nodeMaze, start, goal);
+		return findPath(nodeMatrix, start, goal);
 	}
 }

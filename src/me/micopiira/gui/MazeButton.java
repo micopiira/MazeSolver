@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class MazeButton extends JButton {
 	private MazePoint mazePoint;
+	private boolean onPath;
 	private static final Map<MazePoint, Color> colorMap = createColorMap();
 
 	private static Map<MazePoint,Color> createColorMap() {
@@ -23,7 +24,6 @@ public class MazeButton extends JButton {
 	public MazeButton(MazePoint mazePoint) {
 		this.mazePoint = mazePoint;
 		this.reDraw();
-
 	}
 
 	public void setMazePoint(MazePoint mazePoint) {
@@ -31,6 +31,18 @@ public class MazeButton extends JButton {
 	}
 
 	void reDraw() {
-		setBackground(colorMap.get(mazePoint));
+		if (isOnPath() && !mazePoint.equals(MazePoint.GOAL)) {
+			setBackground(Color.CYAN);
+		} else {
+			setBackground(colorMap.get(mazePoint));
+		}
+	}
+
+	public boolean isOnPath() {
+		return onPath;
+	}
+
+	public void setOnPath(boolean onPath) {
+		this.onPath = onPath;
 	}
 }
