@@ -41,7 +41,8 @@ public class Test {
 		JFrame frame = new JFrame("Test");
 		frame.setContentPane(jPanel);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.pack();
+		// frame.pack();
+		frame.setSize(800,800);
 		frame.setVisible(true);
 
 		jPanel.setLayout(new GridLayout(2, 0));
