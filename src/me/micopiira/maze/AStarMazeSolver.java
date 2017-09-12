@@ -12,18 +12,21 @@ public class AStarMazeSolver implements MazeSolver {
 
 	private final AStar aStar = new AStar();
 
-	@Override
-	public Optional<List<Vector2>> solve(Matrix<MazePoint> matrix) {
-		Vector2 start = matrix.findFirst(MazePoint.START).orElseThrow(() -> new RuntimeException("No starting point found from matrix!"));
-		Vector2 goal = matrix.findFirst(MazePoint.GOAL).orElseThrow(() -> new RuntimeException("No goal found from matrix!"));
-
-		Matrix<Node> nodeMatrix = new Matrix<>(matrix.getElements().entrySet().stream()
-				.map(entry -> {
-					Node node = new Node(entry.getKey(), !entry.getValue().equals(MazePoint.WALL));
-					return new AbstractMap.SimpleEntry<>(entry.getKey(), node);
-				})
+	private Matrix<Node> mazeToNodeMatrix(Matrix<MazePoint> maze) {
+		return new Matrix<>(maze.getElements().entrySet().stream()
+				.map(entry ->
+					new AbstractMap.SimpleEntry<>(
+							entry.getKey(),
+							new Node(entry.getKey(), !entry.getValue().equals(MazePoint.WALL))
+					)
+				)
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+	}
 
-		return aStar.findPath(nodeMatrix, start, goal);
+	@Override
+	public Optional<List<Vector2>> solve(Matrix<MazePoint> maze) {
+		Vector2 start = maze.findFirst(MazePoint.START).orElseThrow(() -> new RuntimeException("No starting point found from matrix!"));
+		Vector2 goal = maze.findFirst(MazePoint.GOAL).orElseThrow(() -> new RuntimeException("No goal found from matrix!"));
+		return aStar.findPath(mazeToNodeMatrix(maze), start, goal);
 	}
 }
