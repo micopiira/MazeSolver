@@ -11,7 +11,7 @@ import java.util.List;
 public class Test {
 	private final MazeSolver mazeSolver;
 	private Matrix<MazePoint> matrix = new Matrix<>(new HashMap<>());
-	private List<Coordinate> solvedPath = new ArrayList<>();
+	private List<Vector2> solvedPath = new ArrayList<>();
 	private Matrix<MazeButton> matrixButtons = new Matrix<>(new HashMap<>());
 
 	public Test(MazeSolver mazeSolver) {
@@ -25,11 +25,11 @@ public class Test {
 	private void initMaze(int cols, int rows) {
 		for (int y = 0; y < cols; y++) {
 			for (int x = 0; x < rows; x++) {
-				matrix.set(Coordinate.of(x, y), MazePoint.EMPTY);
+				matrix.set(Vector2.of(x, y), MazePoint.EMPTY);
 			}
 		}
-		matrix.set(Coordinate.of(0, 0), MazePoint.START);
-		matrix.set(Coordinate.of(cols - 1, rows - 1), MazePoint.GOAL);
+		matrix.set(Vector2.of(0, 0), MazePoint.START);
+		matrix.set(Vector2.of(cols - 1, rows - 1), MazePoint.GOAL);
 	}
 
 	public void createAndShowGUI() {
@@ -60,7 +60,7 @@ public class Test {
 		initMaze(size, size);
 		for (int y = 0; y < size; y++) {
 			for (int x = 0; x < size; x++) {
-				Coordinate coordinate = Coordinate.of(x, y);
+				Vector2 coordinate = Vector2.of(x, y);
 				MazeButton mazeButton = matrix.get(coordinate).map(MazeButton::new).orElseThrow(() -> new RuntimeException("No MazePoint found at: " + coordinate));
 				mazeButton.addActionListener(e -> {
 					this.setSolvedPath(new ArrayList<>());
@@ -77,16 +77,16 @@ public class Test {
 		jPanel.add(controls);
 	}
 
-	public List<Coordinate> getSolvedPath() {
+	public List<Vector2> getSolvedPath() {
 		return solvedPath;
 	}
 
-	public void setSolvedPath(List<Coordinate> solvedPath) {
+	public void setSolvedPath(List<Vector2> solvedPath) {
 		this.solvedPath = solvedPath;
 	}
 
 	private void redrawGrid() {
-		this.matrixButtons.getMazePoints().forEach((coordinate, mazeButton) -> {
+		this.matrixButtons.getElements().forEach((coordinate, mazeButton) -> {
 			mazeButton.setMazePoint(matrix.get(coordinate).get());
 			mazeButton.setOnPath(getSolvedPath().contains(coordinate));
 			mazeButton.reDraw();

@@ -10,9 +10,9 @@ public class AStarMazeSolver implements MazeSolver {
 		private int G;
 		private Node parent;
 		private boolean walkable;
-		private Coordinate coordinate;
+		private Vector2 coordinate;
 
-		private Node(Coordinate coordinate, boolean walkable) {
+		private Node(Vector2 coordinate, boolean walkable) {
 			this.coordinate = coordinate;
 			this.walkable = walkable;
 		}
@@ -53,11 +53,11 @@ public class AStarMazeSolver implements MazeSolver {
 			this.walkable = walkable;
 		}
 
-		public Coordinate getCoordinate() {
+		public Vector2 getCoordinate() {
 			return coordinate;
 		}
 
-		public void setCoordinate(Coordinate coordinate) {
+		public void setCoordinate(Vector2 coordinate) {
 			this.coordinate = coordinate;
 		}
 	}
@@ -72,7 +72,7 @@ public class AStarMazeSolver implements MazeSolver {
 		return new ArrayList<>(path);
 	}
 
-	public Optional<List<Coordinate>> findPath(Matrix<Node> matrix, Coordinate start, Coordinate end) {
+	public Optional<List<Vector2>> findPath(Matrix<Node> matrix, Vector2 start, Vector2 end) {
 		Node startNode = matrix.get(start).get();
 		Node targetNode = matrix.get(end).get();
 
@@ -116,11 +116,11 @@ public class AStarMazeSolver implements MazeSolver {
 	}
 
 	@Override
-	public Optional<List<Coordinate>> solve(Matrix<MazePoint> matrix) {
-		Coordinate start = matrix.findFirst(MazePoint.START).orElseThrow(() -> new RuntimeException("No starting point found from matrix!"));
-		Coordinate goal = matrix.findFirst(MazePoint.GOAL).orElseThrow(() -> new RuntimeException("No goal found from matrix!"));
+	public Optional<List<Vector2>> solve(Matrix<MazePoint> matrix) {
+		Vector2 start = matrix.findFirst(MazePoint.START).orElseThrow(() -> new RuntimeException("No starting point found from matrix!"));
+		Vector2 goal = matrix.findFirst(MazePoint.GOAL).orElseThrow(() -> new RuntimeException("No goal found from matrix!"));
 
-		Matrix<Node> nodeMatrix = new Matrix<>(matrix.getMazePoints().entrySet().stream()
+		Matrix<Node> nodeMatrix = new Matrix<>(matrix.getElements().entrySet().stream()
 				.map(entry -> {
 					Node node = new Node(entry.getKey(), !entry.getValue().equals(MazePoint.WALL));
 					return new AbstractMap.SimpleEntry<>(entry.getKey(), node);
