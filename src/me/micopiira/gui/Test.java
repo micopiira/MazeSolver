@@ -23,12 +23,12 @@ public class Test {
 	}
 
 	private void initMaze(int cols, int rows) {
-		for (int y = 0; y < cols; y++) {
-			for (int x = 0; x < rows; x++) {
+		for (int x = 0; x < rows; x++) {
+			for (int y = 0; y < cols; y++) {
 				matrix.set(Vector2.of(x, y), MazePoint.EMPTY);
 			}
 		}
-		matrix.set(Vector2.of(0, 0), MazePoint.START);
+		matrix.set(Vector2.of(1, 0), MazePoint.START);
 		matrix.set(Vector2.of(cols - 1, rows - 1), MazePoint.GOAL);
 	}
 
@@ -58,8 +58,8 @@ public class Test {
 
 		grid.setLayout(new GridLayout(size, size));
 		initMaze(size, size);
-		for (int y = 0; y < size; y++) {
-			for (int x = 0; x < size; x++) {
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < size; y++) {
 				Vector2 coordinate = Vector2.of(x, y);
 				MazeButton mazeButton = matrix.get(coordinate).map(MazeButton::new).orElseThrow(() -> new RuntimeException("No MazePoint found at: " + coordinate));
 				mazeButton.addActionListener(e -> {

@@ -19,10 +19,10 @@ public class Matrix<T> {
 	}
 
 	public Matrix(List<List<T>> maze) {
-		System.out.println(maze);
-		for (int y = 0; y < maze.size(); y++) {
-			for (int x = 0; x < maze.get(y).size(); x++) {
-				elements.put(Vector2.of(x, y), maze.get(y).get(x));
+		for (int x = 0; x < maze.size(); x++) {
+			for (int y = 0; y < maze.get(x).size(); y++) {
+				//noinspection SuspiciousNameCombination
+				elements.put(Vector2.of(x, y), maze.get(x).get(y));
 			}
 		}
 	}

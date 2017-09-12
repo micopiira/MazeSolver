@@ -9,6 +9,8 @@ public class Test {
 				Arrays.asList(4,5,6)
 		));
 
+		System.out.println(integerMatrix.get(Vector2.of(1, 0)));
+
 		System.out.println(integerMatrix);
 	}
 }

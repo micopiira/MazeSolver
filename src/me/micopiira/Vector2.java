@@ -26,16 +26,11 @@ public class Vector2 {
 	}
 
 	public List<Vector2> getNeighbours() {
-		// Diagonal neighbours commented out
 		return Arrays.asList(
-				// Vector2.of(this.getX() - 1, this.getY() - 1),
 				Vector2.of(this.getX() - 1, this.getY()),
-				// Vector2.of(this.getX() - 1, this.getY() + 1),
 				Vector2.of(this.getX(), this.getY() - 1),
 				Vector2.of(this.getX(), this.getY() + 1),
-				// Vector2.of(this.getX() + 1, this.getY() - 1),
 				Vector2.of(this.getX() + 1, this.getY())
-				// Vector2.of(this.getX() + 1, this.getY() + 1)
 		);
 	}
 

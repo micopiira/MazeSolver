@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class AStarMazeSolver implements MazeSolver {
 
-	private class Node {
+	private class Node implements Comparable {
 		private int H;
 		private int G;
 		private Node parent;
@@ -60,6 +60,12 @@ public class AStarMazeSolver implements MazeSolver {
 		public void setCoordinate(Vector2 coordinate) {
 			this.coordinate = coordinate;
 		}
+
+		@Override
+		public int compareTo(Object o) {
+			Node other = (Node) o;
+			return Integer.compare(this.getF(), other.getF());
+		}
 	}
 
 	private List<Node> retracePath(Node startNode, Node endNode) {
@@ -76,27 +82,22 @@ public class AStarMazeSolver implements MazeSolver {
 		Node startNode = matrix.get(start).get();
 		Node targetNode = matrix.get(end).get();
 
-		List<Node> openSet = new ArrayList<>();
+		PriorityQueue<Node> openSet = new PriorityQueue<>();
 		HashSet<Node> closedSet = new HashSet<>();
 
 		openSet.add(startNode);
-		while (openSet.size() > 0) {
-			Node node = openSet.get(0);
-			for (int i = 1; i < openSet.size(); i ++) {
-				if (openSet.get(i).getF() < node.getF() || openSet.get(i).getF() == node.getF()) {
-					if (openSet.get(i).getH() < node.getH())
-						node = openSet.get(i);
-				}
-			}
+		while (!openSet.isEmpty()) {
 
-			openSet.remove(node);
-			closedSet.add(node);
+			Node node = openSet.poll();
 
 			if (node == targetNode) {
 				return Optional.of(retracePath(startNode, targetNode).stream().map(Node::getCoordinate).collect(Collectors.toList()));
 			}
 
+			closedSet.add(node);
+
 			for (Node neighbour : matrix.getNeighbors(node.getCoordinate())) {
+
 				if (!neighbour.isWalkable() || closedSet.contains(neighbour)) {
 					continue;
 				}
@@ -107,9 +108,11 @@ public class AStarMazeSolver implements MazeSolver {
 					neighbour.setH(neighbour.getCoordinate().manhattanDistance(targetNode.getCoordinate()));
 					neighbour.setParent(node);
 
-					if (!openSet.contains(neighbour))
+					if (!openSet.contains(neighbour)) {
 						openSet.add(neighbour);
+					}
 				}
+
 			}
 		}
 		return Optional.empty();
