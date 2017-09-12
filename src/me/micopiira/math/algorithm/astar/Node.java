@@ -2,7 +2,7 @@ package me.micopiira.math.algorithm.astar;
 
 import me.micopiira.math.Vector2;
 
-public class Node implements Comparable {
+public class Node implements Comparable<Node> {
 	private int H;
 	private int G = Integer.MAX_VALUE;
 	private Node parent;
@@ -62,15 +62,14 @@ public class Node implements Comparable {
 	public String toString() {
 		return "Node{" +
 				"G=" + G +
-				"H=" + H +
-				"F=" + getF() +
+				",H=" + H +
+				",F=" + getF() +
 				", coordinate=" + coordinate +
 				'}';
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		Node other = (Node) o;
-		return Integer.compare(other.getF(), this.getF());
+	public int compareTo(Node o) {
+		return Integer.compare(this.getF(), o.getF());
 	}
 }
