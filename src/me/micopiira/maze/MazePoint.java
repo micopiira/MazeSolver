@@ -1,4 +1,4 @@
-package me.micopiira;
+package me.micopiira.maze;
 
 public enum MazePoint {
 	START,

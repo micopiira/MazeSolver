@@ -1,5 +1,8 @@
 package me.micopiira;
 
+import me.micopiira.math.Matrix;
+import me.micopiira.math.Vector2;
+
 import java.util.Arrays;
 
 public class Test {
@@ -9,7 +12,7 @@ public class Test {
 				Arrays.asList(4,5,6)
 		));
 
-		System.out.println(integerMatrix.get(Vector2.of(1, 0)));
+		System.out.println(integerMatrix.getNeighbors(Vector2.of(1, 1)));
 
 		System.out.println(integerMatrix);
 	}

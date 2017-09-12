@@ -1,6 +1,10 @@
 package me.micopiira.gui;
 
-import me.micopiira.*;
+import me.micopiira.math.Matrix;
+import me.micopiira.math.Vector2;
+import me.micopiira.maze.AStarMazeSolver;
+import me.micopiira.maze.MazePoint;
+import me.micopiira.maze.MazeSolver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,16 +49,16 @@ public class Test {
 
 		JPanel controls = new JPanel();
 		JButton solveButton = new JButton("Solve");
-
+		JTextField gridSize = new JTextField();
 		solveButton.addActionListener(e -> {
 			this.setSolvedPath(mazeSolver.solve(matrix).orElseThrow(() -> new RuntimeException("No path found!")));
 			redrawGrid();
 		});
-
+		controls.add(gridSize);
 		controls.add(solveButton);
 
 		JPanel grid = new JPanel();
-		int size = 10;
+		int size = 15;
 
 		grid.setLayout(new GridLayout(size, size));
 		initMaze(size, size);

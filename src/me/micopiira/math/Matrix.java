@@ -1,4 +1,4 @@
-package me.micopiira;
+package me.micopiira.math;
 
 import java.util.*;
 import java.util.stream.Collectors;
