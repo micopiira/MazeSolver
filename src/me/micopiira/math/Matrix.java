@@ -21,20 +21,9 @@ public class Matrix<T> {
 	public Matrix(List<List<T>> maze) {
 		for (int x = 0; x < maze.size(); x++) {
 			for (int y = 0; y < maze.get(x).size(); y++) {
-				//noinspection SuspiciousNameCombination
 				elements.put(Vector2.of(x, y), maze.get(x).get(y));
 			}
 		}
-	}
-
-	public int getRowCount() {
-		//noinspection ConstantConditions
-		return elements.keySet().stream().mapToInt(Vector2::getY).max().getAsInt() + 1;
-	}
-
-	public int getColumnCount() {
-		//noinspection ConstantConditions
-		return elements.keySet().stream().mapToInt(Vector2::getX).max().getAsInt() + 1;
 	}
 
 	public Map<Vector2, T> getElements() {
@@ -61,9 +50,9 @@ public class Matrix<T> {
 				.collect(Collectors.toList());
 	}
 
-	public Optional<Vector2> findFirst(T mazePoint) {
+	public Optional<Vector2> findFirst(T element) {
 		return elements.entrySet().stream()
-				.filter(entry -> entry.getValue().equals(mazePoint))
+				.filter(entry -> entry.getValue().equals(element))
 				.map(Map.Entry::getKey)
 				.findFirst();
 	}

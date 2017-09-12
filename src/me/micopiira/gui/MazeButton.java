@@ -31,11 +31,7 @@ public class MazeButton extends JButton {
 	}
 
 	void reDraw() {
-		if (isOnPath() && !mazePoint.equals(MazePoint.GOAL)) {
-			setBackground(Color.CYAN);
-		} else {
-			setBackground(colorMap.get(mazePoint));
-		}
+		setBackground(isOnPath() && !mazePoint.equals(MazePoint.GOAL) ? Color.CYAN : colorMap.get(mazePoint));
 	}
 
 	public boolean isOnPath() {

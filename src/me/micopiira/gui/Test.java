@@ -32,7 +32,7 @@ public class Test {
 				matrix.set(Vector2.of(x, y), MazePoint.EMPTY);
 			}
 		}
-		matrix.set(Vector2.of(1, 0), MazePoint.START);
+		matrix.set(Vector2.of(0, 0), MazePoint.START);
 		matrix.set(Vector2.of(cols - 1, rows - 1), MazePoint.GOAL);
 	}
 
