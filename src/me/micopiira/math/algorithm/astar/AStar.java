@@ -18,37 +18,40 @@ public class AStar {
 		return new ArrayList<>(path);
 	}
 
-	public Optional<List<Vector2>> findPath(Matrix<Node> matrix, Vector2 start, Vector2 end) {
+	public Optional<List<Vector2>> findPath(Matrix<Node> matrix, Vector2 start, Vector2 target) {
 		Node startNode = matrix.get(start).get();
-		Node targetNode = matrix.get(end).get();
-		PriorityQueue<Node> openSet = new PriorityQueue<>();
+		Node targetNode = matrix.get(target).get();
+
 		HashSet<Node> closedSet = new HashSet<>();
+		Queue<Node> openSet = new PriorityQueue<>();
 		openSet.add(startNode);
 
-		while (!openSet.isEmpty()) {
-			Node node = openSet.poll();
-			closedSet.add(node);
+		while (openSet.size() > 0) {
 
-			if (node == targetNode) {
+			Node current = openSet.poll();
+			closedSet.add(current);
+
+			if (current.getCoordinate().equals(target))
 				return Optional.of(retracePath(startNode, targetNode).stream().map(Node::getCoordinate).collect(Collectors.toList()));
-			}
 
-			for (Node neighbour : matrix.getNeighbors(node.getCoordinate())) {
-				if (!neighbour.isWalkable() || closedSet.contains(neighbour)) {
+			for (Node neighbour : matrix.getNeighbors(current.getCoordinate())) {
+				if (!neighbour.isWalkable() || closedSet.contains(neighbour))
 					continue;
-				}
-				int newCostToNeighbour = node.getG() + node.getCoordinate().manhattanDistance(neighbour.getCoordinate());
-				if (newCostToNeighbour < neighbour.getG() || !openSet.contains(neighbour)) {
-					neighbour.setG(newCostToNeighbour);
-					neighbour.setH(neighbour.getCoordinate().manhattanDistance(targetNode.getCoordinate()));
-					neighbour.setParent(node);
-					if (openSet.contains(neighbour)) {
-						openSet.remove(neighbour);
-					}
+
+				if (!openSet.contains(neighbour))
 					openSet.add(neighbour);
-				}
+
+				int tentativeGScore = current.getG() + current.getCoordinate().manhattanDistance(neighbour.getCoordinate());
+
+				if (tentativeGScore >= neighbour.getG())
+					continue;
+
+				neighbour.setParent(current);
+				neighbour.setG(tentativeGScore);
+				neighbour.setH(neighbour.getCoordinate().manhattanDistance(target));
 			}
 		}
 		return Optional.empty();
 	}
+
 }

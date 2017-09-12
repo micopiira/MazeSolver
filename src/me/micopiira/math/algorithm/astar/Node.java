@@ -4,7 +4,7 @@ import me.micopiira.math.Vector2;
 
 public class Node implements Comparable {
 	private int H;
-	private int G;
+	private int G = Integer.MAX_VALUE;
 	private Node parent;
 	private boolean walkable;
 	private Vector2 coordinate;
@@ -61,9 +61,9 @@ public class Node implements Comparable {
 	@Override
 	public String toString() {
 		return "Node{" +
+				"G=" + G +
 				"H=" + H +
-				", G=" + G +
-				", walkable=" + walkable +
+				"F=" + getF() +
 				", coordinate=" + coordinate +
 				'}';
 	}
@@ -71,6 +71,6 @@ public class Node implements Comparable {
 	@Override
 	public int compareTo(Object o) {
 		Node other = (Node) o;
-		return Integer.compare(this.getF(), other.getF());
+		return Integer.compare(other.getF(), this.getF());
 	}
 }
