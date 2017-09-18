@@ -18,9 +18,6 @@ public class AStar {
 		return new ArrayList<>(path);
 	}
 
-	/**
-	 * TODO: Optimize!!! Use {@link PriorityQueue} for openSet? Or atleast don't sort openSet list on every iteration!
-	 */
 	public Optional<List<Vector2>> findPath(Matrix<Node> matrix, Vector2 start, Vector2 target) {
 		Node startNode = matrix.get(start).get();
 		Node targetNode = matrix.get(target).get();
@@ -28,12 +25,11 @@ public class AStar {
 		startNode.setH(start.manhattanDistance(target));
 
 		HashSet<Node> closedSet = new HashSet<>();
-		List<Node> openSet = new ArrayList<>();
+		Queue<Node> openSet = new PriorityQueue<>();
 		openSet.add(startNode);
 
 		while (openSet.size() > 0) {
-			Collections.sort(openSet);
-			Node current = openSet.get(0);
+			Node current = openSet.poll();
 
 			if (current.getCoordinate().equals(target))
 				return Optional.of(retracePath(startNode, targetNode).stream().map(Node::getCoordinate).collect(Collectors.toList()));
@@ -56,6 +52,8 @@ public class AStar {
 				neighbour.setParent(current);
 				neighbour.setG(tentativeGScore);
 				neighbour.setH(neighbour.getCoordinate().manhattanDistance(target));
+				openSet.remove(neighbour);
+				openSet.add(neighbour);
 			}
 		}
 		return Optional.empty();
