@@ -5,7 +5,9 @@ import me.micopiira.math.Vector2;
 import me.micopiira.math.algorithm.astar.AStar;
 import me.micopiira.math.algorithm.astar.Node;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AStarMazeSolver implements MazeSolver {
@@ -14,19 +16,15 @@ public class AStarMazeSolver implements MazeSolver {
 
 	private Matrix<Node> mazeToNodeMatrix(Matrix<MazePoint> maze) {
 		return new Matrix<>(maze.getElements().entrySet().stream()
-				.map(entry ->
-					new AbstractMap.SimpleEntry<>(
-							entry.getKey(),
-							new Node(entry.getKey(), !entry.getValue().equals(MazePoint.WALL))
-					)
-				)
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+				.map(entry -> new Node(entry.getKey(), !entry.getValue().equals(MazePoint.WALL)))
+				.collect(Collectors.toMap(Node::getCoordinate, Function.identity())));
 	}
 
 	@Override
 	public Optional<List<Vector2>> solve(Matrix<MazePoint> maze) {
 		Vector2 start = maze.findFirst(MazePoint.START).orElseThrow(() -> new RuntimeException("No starting point found from matrix!"));
 		Vector2 goal = maze.findFirst(MazePoint.GOAL).orElseThrow(() -> new RuntimeException("No goal found from matrix!"));
-		return aStar.findPath(mazeToNodeMatrix(maze), start, goal);
+		Matrix<Node> nodeMatrix = mazeToNodeMatrix(maze);
+		return aStar.findPath(nodeMatrix, nodeMatrix.get(start).get(), nodeMatrix.get(goal).get());
 	}
 }

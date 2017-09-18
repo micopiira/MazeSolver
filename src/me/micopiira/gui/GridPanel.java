@@ -6,25 +6,15 @@ import me.micopiira.maze.MazePoint;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class GridPanel extends JPanel {
+class GridPanel extends JPanel {
 
-	private Matrix<MazeButton> buttons = new Matrix<>(new HashMap<>());
+	private final Matrix<MazeButton> buttons = new Matrix<>(new HashMap<>());
 
-	public void redraw() {
-		this.buttons.getElements().forEach((coordinate, mazeButton) -> {
-			mazeButton.setMazePoint(Test.maze.get(coordinate).get());
-			mazeButton.setOnPath(Test.solvedPath.contains(coordinate));
-			mazeButton.reDraw();
-		});
-	}
-
-	public GridPanel(int size) {
-
+	GridPanel(int size) {
 		setLayout(new GridLayout(size, size));
-
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
 				Vector2 coordinate = Vector2.of(x, y);
@@ -41,5 +31,13 @@ public class GridPanel extends JPanel {
 			}
 		}
 
+	}
+
+	void redraw() {
+		this.buttons.getElements().forEach((coordinate, mazeButton) -> {
+			mazeButton.setMazePoint(Test.maze.get(coordinate).get());
+			mazeButton.setOnPath(Test.solvedPath.contains(coordinate));
+			mazeButton.reDraw();
+		});
 	}
 }

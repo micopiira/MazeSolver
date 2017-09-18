@@ -25,6 +25,9 @@ public class Vector2 {
 		return x == that.x && y == that.y;
 	}
 
+	/**
+	 * TODO: Add support for diagonal neighbours?
+	 */
 	public List<Vector2> getNeighbours() {
 		return Arrays.asList(
 				Vector2.of(this.getX() - 1, this.getY()),

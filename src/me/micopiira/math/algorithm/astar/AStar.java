@@ -18,11 +18,9 @@ public class AStar {
 		return new ArrayList<>(path);
 	}
 
-	public Optional<List<Vector2>> findPath(Matrix<Node> matrix, Vector2 start, Vector2 target) {
-		Node startNode = matrix.get(start).get();
-		Node targetNode = matrix.get(target).get();
+	public Optional<List<Vector2>> findPath(Matrix<Node> matrix, Node startNode, Node targetNode) {
 		startNode.setG(0);
-		startNode.setH(start.manhattanDistance(target));
+		startNode.setH(startNode.getCoordinate().manhattanDistance(targetNode.getCoordinate()));
 
 		HashSet<Node> closedSet = new HashSet<>();
 		Queue<Node> openSet = new PriorityQueue<>();
@@ -31,13 +29,13 @@ public class AStar {
 		while (openSet.size() > 0) {
 			Node current = openSet.poll();
 
-			if (current.getCoordinate().equals(target))
+			if (current.getCoordinate().equals(targetNode.getCoordinate()))
 				return Optional.of(retracePath(startNode, targetNode).stream().map(Node::getCoordinate).collect(Collectors.toList()));
 
 			openSet.remove(current);
 			closedSet.add(current);
 
-			for (Node neighbour : matrix.getNeighbors(current.getCoordinate())) {
+			for (Node neighbour : matrix.getNeighbours(current.getCoordinate())) {
 				if (!neighbour.isWalkable() || closedSet.contains(neighbour))
 					continue;
 
@@ -51,7 +49,7 @@ public class AStar {
 
 				neighbour.setParent(current);
 				neighbour.setG(tentativeGScore);
-				neighbour.setH(neighbour.getCoordinate().manhattanDistance(target));
+				neighbour.setH(neighbour.getCoordinate().manhattanDistance(targetNode.getCoordinate()));
 				openSet.remove(neighbour);
 				openSet.add(neighbour);
 			}

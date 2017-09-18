@@ -6,8 +6,8 @@ public class Node implements Comparable<Node> {
 	private int H;
 	private int G = Integer.MAX_VALUE;
 	private Node parent;
-	private boolean walkable;
-	private Vector2 coordinate;
+	private final boolean walkable;
+	private final Vector2 coordinate;
 
 	public Node(Vector2 coordinate, boolean walkable) {
 		this.coordinate = coordinate;
@@ -46,16 +46,8 @@ public class Node implements Comparable<Node> {
 		return walkable;
 	}
 
-	public void setWalkable(boolean walkable) {
-		this.walkable = walkable;
-	}
-
 	public Vector2 getCoordinate() {
 		return coordinate;
-	}
-
-	public void setCoordinate(Vector2 coordinate) {
-		this.coordinate = coordinate;
 	}
 
 	@Override

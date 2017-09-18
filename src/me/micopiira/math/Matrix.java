@@ -1,11 +1,40 @@
 package me.micopiira.math;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Matrix<T> {
 
-	private Map<Vector2, T> elements = new HashMap<>();
+	private final Map<Vector2, T> elements;
+
+	public Matrix() {
+		this(new HashMap<>());
+	}
+
+	public Matrix(Map<Vector2, T> elements) {
+		this.elements = elements;
+	}
+
+	public Matrix(List<List<T>> maze) {
+		this();
+		for (int x = 0; x < maze.size(); x++) {
+			for (int y = 0; y < maze.get(x).size(); y++) {
+				elements.put(Vector2.of(x, y), maze.get(x).get(y));
+			}
+		}
+	}
+
+	public Matrix(T t, int size) {
+		this();
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < size; y++) {
+				this.set(Vector2.of(x, y), t);
+			}
+		}
+	}
 
 	@Override
 	public String toString() {
@@ -14,24 +43,8 @@ public class Matrix<T> {
 				'}';
 	}
 
-	public Matrix(Map<Vector2, T> elements) {
-		this.elements = elements;
-	}
-
-	public Matrix(List<List<T>> maze) {
-		for (int x = 0; x < maze.size(); x++) {
-			for (int y = 0; y < maze.get(x).size(); y++) {
-				elements.put(Vector2.of(x, y), maze.get(x).get(y));
-			}
-		}
-	}
-
 	public Map<Vector2, T> getElements() {
 		return elements;
-	}
-
-	public Optional<T> get(int x, int y) {
-		return this.get(Vector2.of(x, y));
 	}
 
 	public Optional<T> get(Vector2 coordinate) {
@@ -42,7 +55,7 @@ public class Matrix<T> {
 		this.elements.put(coordinate, t);
 	}
 
-	public List<T> getNeighbors(Vector2 coordinate) {
+	public List<T> getNeighbours(Vector2 coordinate) {
 		return coordinate.getNeighbours().stream()
 				.map(this::get)
 				.filter(Optional::isPresent)

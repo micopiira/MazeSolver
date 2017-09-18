@@ -2,15 +2,13 @@ package me.micopiira.gui;
 
 import javax.swing.*;
 
-public class ControlsPanel extends JPanel {
+class ControlsPanel extends JPanel {
 
-	public final JButton solveButton;
+	final JButton solveButton = new JButton("Solve");
 
-	public ControlsPanel() {
-		solveButton = new JButton("Solve");
+	ControlsPanel() {
 		JTextField gridSize = new JTextField();
 		JButton setGridSizeButton = new JButton("Set");
-
 		this.add(gridSize);
 		this.add(solveButton);
 		this.add(setGridSizeButton);
