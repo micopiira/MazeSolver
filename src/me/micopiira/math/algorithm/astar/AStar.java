@@ -33,7 +33,9 @@ public class AStar {
 			Node current = openSet.poll();
 
 			if (current.getCoordinate().equals(targetNode.getCoordinate()))
-				return Optional.of(retracePath(startNode, targetNode).stream().map(Node::getCoordinate).collect(Collectors.toList()));
+				return Optional.of(retracePath(startNode, targetNode).stream()
+						.map(Node::getCoordinate)
+						.collect(Collectors.toList()));
 
 			openSet.remove(current);
 			closedSet.add(current);
