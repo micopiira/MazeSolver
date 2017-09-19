@@ -18,6 +18,9 @@ public class AStar {
 		return new ArrayList<>(path);
 	}
 
+	/**
+	 * Implemented using Wikipedia <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">pseudocode</a>
+	 */
 	public Optional<List<Vector2>> findPath(Matrix<Node> matrix, Node startNode, Node targetNode) {
 		startNode.setG(0);
 		startNode.setH(startNode.getCoordinate().manhattanDistance(targetNode.getCoordinate()));
