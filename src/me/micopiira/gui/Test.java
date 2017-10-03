@@ -25,6 +25,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> new Test(new AStarMazeSolver()).createAndShowGUI());
+		Thread.setDefaultUncaughtExceptionHandler((t, e) -> JOptionPane.showMessageDialog(null, e.toString(), e.getMessage(), JOptionPane.ERROR_MESSAGE));
 	}
 
 	private static Matrix<MazePoint> initMaze(int size) {
