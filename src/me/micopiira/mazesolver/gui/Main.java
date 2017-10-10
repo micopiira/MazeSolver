@@ -12,19 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Test {
-	private static final String TITLE = "Test";
+public class Main {
+	private static final String TITLE = "Main";
 	static List<Vector2> solvedPath = new ArrayList<>();
 	private static int gridSize = 15;
 	static Matrix<MazePoint> maze = initMaze(gridSize);
 	private final MazeSolver mazeSolver;
 
-	private Test(MazeSolver mazeSolver) {
+	private Main(MazeSolver mazeSolver) {
 		this.mazeSolver = mazeSolver;
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new Test(new AStarMazeSolver()).createAndShowGUI());
+		SwingUtilities.invokeLater(() -> new Main(new AStarMazeSolver()).createAndShowGUI());
 		Thread.setDefaultUncaughtExceptionHandler((t, e) -> JOptionPane.showMessageDialog(null, e.toString(), e.getMessage(), JOptionPane.ERROR_MESSAGE));
 	}
 

@@ -18,12 +18,12 @@ class GridPanel extends JPanel {
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
 				Vector2 coordinate = Vector2.of(x, y);
-				MazeButton mazeButton = Test.maze.get(coordinate).map(MazeButton::new).orElseThrow(() -> new RuntimeException("No MazePoint found at: " + coordinate));
+				MazeButton mazeButton = Main.maze.get(coordinate).map(MazeButton::new).orElseThrow(() -> new RuntimeException("No MazePoint found at: " + coordinate));
 				mazeButton.addActionListener(e -> {
-					Test.solvedPath = new ArrayList<>();
-					MazePoint mp = Test.maze.get(coordinate).get();
+					Main.solvedPath = new ArrayList<>();
+					MazePoint mp = Main.maze.get(coordinate).get();
 					boolean isWall = mp.equals(MazePoint.WALL);
-					Test.maze.set(coordinate, isWall ? MazePoint.EMPTY : MazePoint.WALL);
+					Main.maze.set(coordinate, isWall ? MazePoint.EMPTY : MazePoint.WALL);
 					redraw();
 				});
 				buttons.set(coordinate, mazeButton);
@@ -35,8 +35,8 @@ class GridPanel extends JPanel {
 
 	void redraw() {
 		this.buttons.getElements().forEach((coordinate, mazeButton) -> {
-			mazeButton.setMazePoint(Test.maze.get(coordinate).get());
-			mazeButton.setOnPath(Test.solvedPath.contains(coordinate));
+			mazeButton.setMazePoint(Main.maze.get(coordinate).get());
+			mazeButton.setOnPath(Main.solvedPath.contains(coordinate));
 			mazeButton.reDraw();
 		});
 	}
