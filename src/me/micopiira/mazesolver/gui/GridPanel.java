@@ -6,38 +6,58 @@ import me.micopiira.mazesolver.maze.MazePoint;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 class GridPanel extends JPanel {
 
-	private final Matrix<MazeButton> buttons = new Matrix<>(new HashMap<>());
+	private final Matrix<MazePoint> maze;
+	private final List<Vector2> solvedPath;
+	private Matrix<MazeButton> buttons = new Matrix<>();
+	private int size;
 
-	GridPanel(int size) {
+	GridPanel(int size, Matrix<MazePoint> maze, List<Vector2> solvedPath) {
+		this.maze = maze;
+		this.solvedPath = solvedPath;
+		this.size = size;
+	}
+
+	void setSize(int size) {
+		this.size = size;
+	}
+
+	void recreateGrid() {
+		removeAll();
+		revalidate();
 		setLayout(new GridLayout(size, size));
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
 				Vector2 coordinate = Vector2.of(x, y);
-				MazeButton mazeButton = Main.maze.get(coordinate).map(MazeButton::new).orElseThrow(() -> new RuntimeException("No MazePoint found at: " + coordinate));
+				MazeButton mazeButton = maze.get(coordinate).map(MazeButton::new).orElseThrow(() -> new RuntimeException("No MazePoint found at: " + coordinate));
+				mazeButton.setOnPath(false);
 				mazeButton.addActionListener(e -> {
-					Main.solvedPath = new ArrayList<>();
-					MazePoint mp = Main.maze.get(coordinate).get();
-					boolean isWall = mp.equals(MazePoint.WALL);
-					Main.maze.set(coordinate, isWall ? MazePoint.EMPTY : MazePoint.WALL);
+					solvedPath.clear();
+					boolean isWall = maze.get(coordinate).filter(MazePoint.WALL::equals).isPresent();
+					maze.set(coordinate, isWall ? MazePoint.EMPTY : MazePoint.WALL);
+					mazeButton.setMazePoint(maze.get(coordinate).get());
+					mazeButton.setOnPath(false);
+					mazeButton.reDraw();
 					redraw();
 				});
-				buttons.set(coordinate, mazeButton);
 				add(mazeButton);
+				buttons.set(coordinate, mazeButton);
 			}
 		}
-
+		repaint();
 	}
 
 	void redraw() {
-		this.buttons.getElements().forEach((coordinate, mazeButton) -> {
-			mazeButton.setMazePoint(Main.maze.get(coordinate).get());
-			mazeButton.setOnPath(Main.solvedPath.contains(coordinate));
-			mazeButton.reDraw();
-		});
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < size; y++) {
+				Vector2 coordinate = Vector2.of(x, y);
+				MazeButton mazeButton = buttons.get(coordinate).get();
+				mazeButton.setOnPath(solvedPath.contains(coordinate));
+				mazeButton.reDraw();
+			}
+		}
 	}
 }

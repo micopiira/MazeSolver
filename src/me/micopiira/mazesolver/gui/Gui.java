@@ -2,7 +2,6 @@ package me.micopiira.mazesolver.gui;
 
 import me.micopiira.mazesolver.math.Matrix;
 import me.micopiira.mazesolver.math.Vector2;
-import me.micopiira.mazesolver.maze.AStarMazeSolver;
 import me.micopiira.mazesolver.maze.MazePoint;
 import me.micopiira.mazesolver.maze.MazeSolver;
 
@@ -12,30 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Main {
-	private static final String TITLE = "Main";
-	static List<Vector2> solvedPath = new ArrayList<>();
-	private static int gridSize = 15;
-	static Matrix<MazePoint> maze = initMaze(gridSize);
+public class Gui {
+	private static final String TITLE = "Gui";
+	private static final int DEFAULT_SIZE = 15;
+	private List<Vector2> solvedPath = new ArrayList<>();
+	private Matrix<MazePoint> maze = createMaze(DEFAULT_SIZE);
 	private final MazeSolver mazeSolver;
 
-	private Main(MazeSolver mazeSolver) {
+	public Gui(MazeSolver mazeSolver) {
 		this.mazeSolver = mazeSolver;
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new Main(new AStarMazeSolver()).createAndShowGUI());
-		Thread.setDefaultUncaughtExceptionHandler((t, e) -> JOptionPane.showMessageDialog(null, e.toString(), e.getMessage(), JOptionPane.ERROR_MESSAGE));
-	}
-
-	private static Matrix<MazePoint> initMaze(int size) {
+	private static Matrix<MazePoint> createMaze(int size) {
 		Matrix<MazePoint> m = new Matrix<>(MazePoint.EMPTY, size);
 		m.set(Vector2.of(0, 0), MazePoint.START);
 		m.set(Vector2.of(size - 1, size - 1), MazePoint.GOAL);
 		return m;
 	}
 
-	private void createAndShowGUI() {
+	public void createAndShowGUI() {
 		JPanel jPanel = new JPanel();
 		JFrame frame = new JFrame(TITLE);
 		frame.setContentPane(jPanel);
@@ -47,10 +41,19 @@ public class Main {
 		jPanel.setBackground(Color.BLACK);
 
 		ControlsPanel controls = new ControlsPanel();
-		GridPanel grid = new GridPanel(gridSize);
+		GridPanel grid = new GridPanel(DEFAULT_SIZE, maze, solvedPath);
+
+		controls.setGridSizeButton.addActionListener(e -> {
+			solvedPath.clear();
+			int gridSize = Integer.parseInt(controls.gridSize.getText());
+			grid.setSize(gridSize);
+			maze.setElements(createMaze(gridSize).getElements());
+			grid.recreateGrid();
+		});
 
 		controls.solveButton.addActionListener(e -> {
-			solvedPath = mazeSolver.solve(maze).orElseThrow(() -> new RuntimeException("No path found!"));
+			solvedPath.clear();
+			solvedPath.addAll(mazeSolver.solve(maze).orElseThrow(() -> new RuntimeException("No path found!")));
 			grid.redraw();
 		});
 

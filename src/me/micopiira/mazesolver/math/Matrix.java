@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class Matrix<T> {
 
-	private final Map<Vector2, T> elements;
+	private Map<Vector2, T> elements;
 
 	public Matrix() {
 		this(new HashMap<>());
@@ -25,6 +25,10 @@ public class Matrix<T> {
 				elements.put(Vector2.of(x, y), maze.get(x).get(y));
 			}
 		}
+	}
+
+	public void setElements(Map<Vector2, T> elements) {
+		this.elements = elements;
 	}
 
 	public Matrix(T t, int size) {
