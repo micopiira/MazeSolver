@@ -1,6 +1,6 @@
-package me.micopiira.gui;
+package me.micopiira.mazesolver.gui;
 
-import me.micopiira.maze.MazePoint;
+import me.micopiira.mazesolver.maze.MazePoint;
 
 import javax.swing.*;
 import java.awt.*;

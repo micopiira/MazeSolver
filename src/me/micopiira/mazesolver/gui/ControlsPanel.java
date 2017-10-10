@@ -1,4 +1,4 @@
-package me.micopiira.gui;
+package me.micopiira.mazesolver.gui;
 
 import javax.swing.*;
 

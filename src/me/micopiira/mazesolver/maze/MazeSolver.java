@@ -1,7 +1,7 @@
-package me.micopiira.maze;
+package me.micopiira.mazesolver.maze;
 
-import me.micopiira.math.Matrix;
-import me.micopiira.math.Vector2;
+import me.micopiira.mazesolver.math.Matrix;
+import me.micopiira.mazesolver.math.Vector2;
 
 import java.util.List;
 import java.util.Optional;

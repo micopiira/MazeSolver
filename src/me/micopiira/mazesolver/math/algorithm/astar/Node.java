@@ -1,13 +1,13 @@
-package me.micopiira.math.algorithm.astar;
+package me.micopiira.mazesolver.math.algorithm.astar;
 
-import me.micopiira.math.Vector2;
+import me.micopiira.mazesolver.math.Vector2;
 
 public class Node implements Comparable<Node> {
+	private final boolean walkable;
+	private final Vector2 coordinate;
 	private int H;
 	private int G = Integer.MAX_VALUE;
 	private Node parent;
-	private final boolean walkable;
-	private final Vector2 coordinate;
 
 	public Node(Vector2 coordinate, boolean walkable) {
 		this.coordinate = coordinate;

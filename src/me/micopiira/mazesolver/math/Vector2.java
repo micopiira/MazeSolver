@@ -1,4 +1,4 @@
-package me.micopiira.math;
+package me.micopiira.mazesolver.math;
 
 import java.util.Arrays;
 import java.util.List;

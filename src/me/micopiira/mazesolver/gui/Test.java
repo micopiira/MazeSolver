@@ -1,10 +1,10 @@
-package me.micopiira.gui;
+package me.micopiira.mazesolver.gui;
 
-import me.micopiira.math.Matrix;
-import me.micopiira.math.Vector2;
-import me.micopiira.maze.AStarMazeSolver;
-import me.micopiira.maze.MazePoint;
-import me.micopiira.maze.MazeSolver;
+import me.micopiira.mazesolver.math.Matrix;
+import me.micopiira.mazesolver.math.Vector2;
+import me.micopiira.mazesolver.maze.AStarMazeSolver;
+import me.micopiira.mazesolver.maze.MazePoint;
+import me.micopiira.mazesolver.maze.MazeSolver;
 
 import javax.swing.*;
 import java.awt.*;

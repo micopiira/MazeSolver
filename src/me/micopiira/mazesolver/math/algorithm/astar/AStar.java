@@ -1,7 +1,7 @@
-package me.micopiira.math.algorithm.astar;
+package me.micopiira.mazesolver.math.algorithm.astar;
 
-import me.micopiira.math.Matrix;
-import me.micopiira.math.Vector2;
+import me.micopiira.mazesolver.math.Matrix;
+import me.micopiira.mazesolver.math.Vector2;
 
 import java.util.*;
 import java.util.stream.Collectors;
