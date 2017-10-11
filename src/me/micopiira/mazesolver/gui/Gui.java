@@ -14,8 +14,8 @@ import java.util.List;
 public class Gui {
 	private static final String TITLE = "Gui";
 	private static final int DEFAULT_SIZE = 15;
-	private List<Vector2> solvedPath = new ArrayList<>();
-	private Matrix<MazePoint> maze = createMaze(DEFAULT_SIZE);
+	private final List<Vector2> solvedPath = new ArrayList<>();
+	private final Matrix<MazePoint> maze = createMaze(DEFAULT_SIZE);
 	private final MazeSolver mazeSolver;
 
 	public Gui(MazeSolver mazeSolver) {

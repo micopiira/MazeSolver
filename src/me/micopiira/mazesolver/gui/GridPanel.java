@@ -6,13 +6,14 @@ import me.micopiira.mazesolver.maze.MazePoint;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 
 class GridPanel extends JPanel {
 
 	private final Matrix<MazePoint> maze;
 	private final List<Vector2> solvedPath;
-	private Matrix<MazeButton> buttons = new Matrix<>();
+	private final Matrix<MazeButton> buttons = new Matrix<>();
 	private int size;
 
 	GridPanel(int size, Matrix<MazePoint> maze, List<Vector2> solvedPath) {
@@ -26,6 +27,7 @@ class GridPanel extends JPanel {
 	}
 
 	void recreateGrid() {
+		buttons.setElements(new HashMap<>());
 		removeAll();
 		revalidate();
 		setLayout(new GridLayout(size, size));
