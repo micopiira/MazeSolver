@@ -4,14 +4,12 @@ import me.micopiira.mazesolver.math.Matrix;
 import me.micopiira.mazesolver.math.Vector2;
 import me.micopiira.mazesolver.math.algorithm.astar.AStar;
 import me.micopiira.mazesolver.math.algorithm.astar.Node;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
 public class AStarMazeSolver implements MazeSolver {
 
 	private final AStar aStar = new AStar();
