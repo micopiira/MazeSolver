@@ -31,8 +31,8 @@ class GridPanel extends JPanel {
 		removeAll();
 		revalidate();
 		setLayout(new GridLayout(size, size));
-		for (int x = 0; x < size; x++) {
-			for (int y = 0; y < size; y++) {
+		for (int y = 0; y < size; y++) {
+			for (int x = 0; x < size; x++) {
 				Vector2 coordinate = Vector2.of(x, y);
 				MazeButton mazeButton = maze.get(coordinate).map(MazeButton::new).orElseThrow(() -> new RuntimeException("No MazePoint found at: " + coordinate));
 				mazeButton.setOnPath(false);
