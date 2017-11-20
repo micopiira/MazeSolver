@@ -8,8 +8,8 @@ class ControlsPanel extends JPanel {
 	final JButton solveButton = new JButton("Solve");
 	final JButton setGridSizeButton = new JButton("Reload");
 	final JTextField gridSize = new JTextField("15");
-	final JTextField startCoords = new JTextField("0,0");
-	final JTextField targetCoords = new JTextField("5,5");
+	final JTextField startCoords = new JTextField("1,1");
+	final JTextField targetCoords = new JTextField("13,13");
 
 	ControlsPanel() {
 		gridSize.setPreferredSize(new Dimension(50, 24));
