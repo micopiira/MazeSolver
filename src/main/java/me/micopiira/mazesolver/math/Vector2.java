@@ -13,6 +13,11 @@ public class Vector2 {
 		this.y = y;
 	}
 
+	public static Vector2 parse(String string) {
+		String[] parts = string.split(",");
+		return Vector2.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+	}
+
 	public static Vector2 of(int x, int y) {
 		return new Vector2(x, y);
 	}

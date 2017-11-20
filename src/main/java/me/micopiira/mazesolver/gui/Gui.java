@@ -15,17 +15,17 @@ public class Gui {
 	private static final String TITLE = "Gui";
 	private static final int DEFAULT_SIZE = 15;
 	private final List<Vector2> solvedPath = new ArrayList<>();
-	private final Matrix<MazePoint> maze = createMaze(DEFAULT_SIZE);
+	private final Matrix<MazePoint> maze = new Matrix<>();
 	private final MazeSolver mazeSolver;
 
 	public Gui(MazeSolver mazeSolver) {
 		this.mazeSolver = mazeSolver;
 	}
 
-	private static Matrix<MazePoint> createMaze(int size) {
+	private static Matrix<MazePoint> createMaze(int size, Vector2 start, Vector2 target) {
 		Matrix<MazePoint> m = new Matrix<>(MazePoint.EMPTY, size);
-		m.set(Vector2.of(0, 0), MazePoint.START);
-		m.set(Vector2.of(size - 1, size - 1), MazePoint.GOAL);
+		m.set(start, MazePoint.START);
+		m.set(target, MazePoint.GOAL);
 		return m;
 	}
 
@@ -47,7 +47,13 @@ public class Gui {
 			solvedPath.clear();
 			int gridSize = Integer.parseInt(controls.gridSize.getText());
 			grid.setSize(gridSize);
-			maze.setElements(createMaze(gridSize).getElements());
+			maze.setElements(
+					createMaze(
+							gridSize,
+							Vector2.parse(controls.startCoords.getText()),
+							Vector2.parse(controls.targetCoords.getText())
+					).getElements()
+			);
 			grid.recreateGrid();
 		});
 
