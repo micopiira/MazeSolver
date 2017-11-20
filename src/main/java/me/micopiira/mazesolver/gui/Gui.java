@@ -65,5 +65,6 @@ public class Gui {
 
 		jPanel.add(grid);
 		jPanel.add(controls);
+		controls.setGridSizeButton.doClick();
 	}
 }
