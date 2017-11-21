@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class Matrix<T> {
@@ -36,6 +37,15 @@ public class Matrix<T> {
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
 				this.set(Vector2.of(x, y), t);
+			}
+		}
+	}
+
+	public Matrix(Supplier<T> t, int size) {
+		this();
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < size; y++) {
+				this.set(Vector2.of(x, y), t.get());
 			}
 		}
 	}

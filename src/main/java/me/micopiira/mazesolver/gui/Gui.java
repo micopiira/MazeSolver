@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Gui {
@@ -17,6 +18,7 @@ public class Gui {
 	private final List<Vector2> solvedPath = new ArrayList<>();
 	private final Matrix<MazePoint> maze = new Matrix<>();
 	private final MazeSolver mazeSolver;
+	private final Random random = new Random();
 
 	public Gui(MazeSolver mazeSolver) {
 		this.mazeSolver = mazeSolver;
@@ -37,22 +39,29 @@ public class Gui {
 		frame.setSize(800, 800);
 		frame.setVisible(true);
 
-		jPanel.setLayout(new GridLayout(2, 1));
+		jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
 		jPanel.setBackground(Color.BLACK);
 
 		ControlsPanel controls = new ControlsPanel();
 		GridPanel grid = new GridPanel(DEFAULT_SIZE, maze, solvedPath);
 
+		controls.randomizeBtn.addActionListener(e -> {
+			solvedPath.clear();
+			int gridSize = (int) controls.gridSize.getValue();
+			grid.setSize(gridSize);
+			Matrix<MazePoint> randomized = new Matrix<>(() -> random.nextInt(10) < 2 ? MazePoint.WALL : MazePoint.EMPTY, gridSize);
+			randomized.set(controls.startCoords.getVector2(), MazePoint.START);
+			randomized.set(controls.targetCoords.getVector2(), MazePoint.GOAL);
+			maze.setElements(randomized.getElements());
+			grid.recreateGrid();
+		});
+
 		controls.setGridSizeButton.addActionListener(e -> {
 			solvedPath.clear();
-			int gridSize = Integer.parseInt(controls.gridSize.getText());
+			int gridSize = (int) controls.gridSize.getValue();
 			grid.setSize(gridSize);
 			maze.setElements(
-					createMaze(
-							gridSize,
-							Vector2.parse(controls.startCoords.getText()),
-							Vector2.parse(controls.targetCoords.getText())
-					).getElements()
+					createMaze(gridSize, controls.startCoords.getVector2(), controls.targetCoords.getVector2()).getElements()
 			);
 			grid.recreateGrid();
 		});
@@ -63,8 +72,12 @@ public class Gui {
 			grid.redraw();
 		});
 
+		grid.setPreferredSize(new Dimension(800, 800 - 150));
+		controls.setPreferredSize(new Dimension(0, 150));
+
 		jPanel.add(grid);
 		jPanel.add(controls);
+
 		controls.setGridSizeButton.doClick();
 	}
 }
