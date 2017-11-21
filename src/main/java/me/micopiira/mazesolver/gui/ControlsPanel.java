@@ -15,8 +15,11 @@ class ControlsPanel extends JPanel {
 		gridSize.setPreferredSize(new Dimension(50, 24));
 		startCoords.setPreferredSize(new Dimension(50, 24));
 		targetCoords.setPreferredSize(new Dimension(50, 24));
+		add(new JLabel("Start"));
 		add(startCoords);
+		add(new JLabel("Target"));
 		add(targetCoords);
+		add(new JLabel("Size"));
 		add(gridSize);
 		add(setGridSizeButton);
 		add(solveButton);
